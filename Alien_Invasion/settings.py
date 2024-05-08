@@ -3,11 +3,18 @@
 class Settings:
     def __init__(self):
         """Инициализируем статические настройки игры"""
-        self.screen_width = 1200
-        self.screen_height = 800
+        self.screen_width = 1000
+        self.screen_height = 600
 
         self.Title_Game ="Alien Invasion"
-        self.background_image = 'background.jpg'
+        self.background_image = 'Image/background.jpg'
+
+        # Цвета
+        self.BLACK = (0, 0, 0)
+        self.RED = (255, 0, 0)
+        self.GREEN = (0, 255, 0)
+        self.BLUE = (0, 0, 255)
+        self.WHITE = (255, 255, 255)
 
         # Настройки корабля
         self.ship_limit = 3
@@ -24,13 +31,6 @@ class Settings:
 
         # Темп роста стоимости пришельцев
         self.score_scale = 1.5
-
-        # Цвета
-        self.BLACK = (0, 0, 0)
-        self.RED = (255, 0, 0)
-        self.GREEN = (0, 255, 0)
-        self.BLUE = (0, 0, 255)
-        self.WHITE = (255, 255, 255)
 
     def initialize_dynamic_settings(self):
         """Инициализирует настройки, изменяющиеся в ходе игры."""
