@@ -15,6 +15,7 @@ class Settings:
         self.GREEN = (0, 255, 0)
         self.BLUE = (0, 0, 255)
         self.WHITE = (255, 255, 255)
+        self.bg_color = self.BLACK
 
         # Настройки корабля
         self.ship_limit = 3

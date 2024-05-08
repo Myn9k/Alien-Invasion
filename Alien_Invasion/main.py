@@ -1,6 +1,8 @@
 import pygame
 import settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
+from button import Button
 
 
 class AlienInvasion:
@@ -10,26 +12,29 @@ class AlienInvasion:
         pygame.display.set_caption(f"{self.settings.Title_Game}")
         self.BG = pygame.image.load(f'{self.settings.background_image}')
         self.stats = GameStats(self)  # Передача объекта настроек игры в GameStats
+        self.sb = Scoreboard(self)
+        self.play_button = Button(self, "Play")
 
-    def run(self):
-        """Запуск основного игрового цикла."""
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
+    def run_game(self):
+        while True:
+            self._check_events()
+            self._update_screen()
 
-            # Заполнение экрана изображением
-            self.screen.blit(self.BG, (0, 0))  # Отображаем изображение BG в координатах (0, 0)
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
-            # Отрисовка других элементов игры
-
-            pygame.display.flip()
-
-        pygame.quit()
+    def _update_screen(self):
+        # Заполнение экрана изображением
+        self.screen.blit(self.BG, (0, 0))  # Отображаем изображение
+        self.sb.show_score()
+        self.play_button.draw_button()
+        pygame.display.flip()
 
 
 if __name__ == '__main__':
     pygame.init()
     Game = AlienInvasion()
-    Game.run()
+    Game.run_game()

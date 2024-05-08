@@ -1,9 +1,9 @@
 class GameStats:
     """Класс для отслеживания статистики в игре Alien Invasion."""
 
-    def __init__(self, ai_game):
+    def __init__(self, game):
         """Инициализируем статистику."""
-        self.settings = ai_game.settings
+        self.settings = game.settings
         self.reset_stats()
 
         # Игра начинается в неактивном состоянии
