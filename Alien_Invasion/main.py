@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 import settings
 from game_stats import GameStats
@@ -7,6 +6,7 @@ from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 
 class AlienInvasion:
@@ -19,6 +19,7 @@ class AlienInvasion:
         self.sb = Scoreboard(self)
         self.play_button = Button(self, "Play")
         self.ship = Ship(self)
+        self.alien = Alien(self)
         self.bullets = pygame.sprite.Group()  # Группа для хранения снарядов
 
     def run_game(self):
@@ -26,6 +27,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()  # Обновление позиции корабля
             self.bullets.update()  # Обновление позиции снарядов
+            self.alien.update()  # Обновление позиции снарядов
             self._update_screen()
 
     def _check_events(self):
@@ -57,6 +59,7 @@ class AlienInvasion:
         self.sb.show_score()
         # Отображение корабля
         self.ship.blitme()
+        self.alien.blitme()
         # Отображение снарядов
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
