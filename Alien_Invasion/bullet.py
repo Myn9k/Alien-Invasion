@@ -1,46 +1,31 @@
-import pygame.font
+import pygame
+from pygame.sprite import Sprite
 
+class Bullet(Sprite):
+    """Класс для управления снарядами, выпущенными кораблем."""
 
-class Bullet():
     def __init__(self, game):
-        self.game = game
-        self.settings = game.settings
-        self.stats = game.stats
-        self.ship = game.ship
+        """Инициализирует снаряд в текущей позиции корабля."""
+        super().__init__()
         self.screen = game.screen
-        self.screen_rect = game.screen.get_rect()
+        self.settings = game.settings
+        self.color = self.settings.bullet_color
 
-        # Построение объекта rect корабля и выравнивание по низу экрана.
-        self.rect.midbottom = self.screen_rect.midbottom
-        self.rect.y = self.screen_rect.y+520
-        self.rect.x = self.screen_rect.x+450
+        # Создание снаряда в позиции (0, 0) и назначение правильной позиции.
+        self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        self.rect.midtop = game.ship.rect.midtop
+        self.rect.x -= 570
 
-        # Сохранение вещественной координаты центра корабля для более точного перемещения.
-        self.x = float(self.rect.x)
-
-        # Флаги перемещения корабля.
-        self.moving_right = False
-        self.moving_left = False
-
-        # Уменьшаем изображение корабля до 25% его исходного размера
-        self.image = pygame.transform.scale(self.image, (int(self.rect.width * 0.05), int(self.rect.height * 0.05)))
+        # Позиция снаряда хранится в вещественном формате.
+        self.y = float(self.rect.y)
 
     def update(self):
-        """Обновляем позицию корабля с учетом флагов"""
-        # Обновление атрибута x, не rect
-        if self.moving_right and self.rect.right < self.screen_rect.right + 1125:
-            self.x += self.settings.ship_speed
-        if self.moving_left and self.rect.left > 0:
-            self.x -= self.settings.ship_speed
+        """Перемещает снаряд вверх по экрану."""
+        # Обновление позиции снаряда в вещественном формате.
+        self.y -= self.settings.bullet_speed
+        # Обновление позиции прямоугольника.
+        self.rect.y = self.y
 
-        # Обновление атрибута rect на основании self.x.
-        self.rect.x = self.x
-
-    def blitme(self):
-        """Отображение корабля"""
-        self.screen.blit(self.image, self.rect)
-
-    def center_ship(self):
-        """Размещаем корабль в нижней стороне экрана"""
-        self.rect.bottom = self.screen_rect.bottom
-        self.x = float(self.rect.x)
+    def draw_bullet(self):
+        """Вывод снаряда на экран."""
+        pygame.draw.rect(self.screen, self.color, self.rect)
